@@ -1,0 +1,58 @@
+{
+  "name": "cairn",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "compile": "node scripts/compile.js",
+    "copy:managed": "node scripts/copy-managed.js",
+    "build": "npm --prefix frontend run build",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:app": "vitest run --config frontend/vite.config.ts frontend/src/lib",
+    "test:e2e": "npm --prefix frontend run test:e2e",
+    "test:integration": "cross-env CAIRN_INTEGRATION=1 vitest run",
+    "test:local": "cross-env CAIRN_INTEGRATION=1 MIDNIGHT_NETWORK=local vitest run",
+    "test:preview": "cross-env CAIRN_INTEGRATION=1 MIDNIGHT_NETWORK=preview vitest run",
+    "test:preprod": "cross-env CAIRN_INTEGRATION=1 MIDNIGHT_NETWORK=preprod vitest run",
+    "deploy:preview": "cross-env MIDNIGHT_NETWORK=preview vite-node scripts/deploy.ts",
+    "deploy:preprod": "cross-env MIDNIGHT_NETWORK=preprod vite-node scripts/deploy.ts",
+    "env:up": "docker compose up -d --wait",
+    "env:down": "docker compose down",
+    "proof:up": "docker compose up -d --wait proof-server",
+    "proof:down": "docker compose stop proof-server",
+    "wait:dust": "vite-node scripts/wait-for-dust.ts",
+    "validate": "npm run compile && npm run check && npm test && npm run test:app && npm run build"
+  },
+  "dependencies": {
+    "@midnight-ntwrk/midnight-js-contracts": "4.1.1",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-level-private-state-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-node-zk-config-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-protocol": "4.1.1",
+    "@midnight-ntwrk/midnight-js-network-id": "4.1.1",
+    "@midnight-ntwrk/midnight-js-types": "4.1.1",
+    "@midnight-ntwrk/midnight-js-utils": "4.1.1",
+    "@midnight-ntwrk/testkit-js": "4.1.1",
+    "@midnight-ntwrk/wallet-sdk": "1.0.0",
+    "@midnight-ntwrk/wallet-sdk-facade": "4.0.1",
+    "rxjs": "7.8.2",
+    "pino": "^9.0.0",
+    "pino-pretty": "^13.0.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/ws": "^8.5.9",
+    "cross-env": "^10.1.0",
+    "typescript": "^5.7.0",
+    "vite-node": "^3.2.4",
+    "vitest": "^4.1.0"
+  },
+  "packageManager": "npm@11.12.1"
+}
