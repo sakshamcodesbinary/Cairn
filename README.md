@@ -32,7 +32,7 @@ Repository: [https://github.com/sakshamcodesbinary/Cairn](https://github.com/sak
 6. [Project Features](#project-features)
 7. [Hackathon Progression](#hackathon-progression-levels-1-4)
 8. [Project Showcase & Verification Proofs](#project-showcase--verification-proofs)
-9. [Local Development & Setup Guide](#local-development--setup-guide)
+9. [Local Development & Setup Guide](#quick-start)
 10. [Contributing, Security, and License](#contributing-security-and-license)
 
 ---
@@ -78,15 +78,19 @@ Repository: [https://github.com/sakshamcodesbinary/Cairn](https://github.com/sak
 ---
 
 ## Verification & Proof Screenshots
-
-### CI/CD & Automated Verification Proofs
-<img width="1218" height="417" alt="CI/CD Verification Proof" src="https://github.com/user-attachments/assets/b599eced-ac8e-4624-8a3b-2db52fe37ec8" />
-
-### Npm Run Dev Proofs
 <img width="1901" height="577" alt="Npm Run Dev Proof" src="https://github.com/user-attachments/assets/0190ee44-deef-4829-8f24-1e7cd3143281" />
 
-### Npm Run Tests Proofs
+
+### CI/CD & Automated Verification Proofs
+
+### Npm Run Dev Proofs
 <img width="1217" height="371" alt="Npm Run Tests Proof" src="https://github.com/user-attachments/assets/03e10eda-12d6-4455-96aa-42a422beae53" />
+
+
+
+### Npm Run Tests Proofs
+<img width="1218" height="417" alt="CI/CD Verification Proof" src="https://github.com/user-attachments/assets/b599eced-ac8e-4624-8a3b-2db52fe37ec8" />
+
 
 ---
 
