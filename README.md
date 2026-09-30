@@ -16,9 +16,9 @@ Repository: [https://github.com/sakshamcodesbinary/Cairn](https://github.com/sak
 
 ## Live Deployment & Contract Address
 
-- **Public Demo / Deployment**: `[Pending Deployment Link]`
-- **Preprod Contract Address**: `[Pending Contract Address]`
-- **Deployment Transaction**: `[Pending Transaction Hash]`
+- **Public Demo / Deployment**: [https://cairn-green-nu.vercel.app/](https://cairn-green-nu.vercel.app/)
+- **Preprod Contract Address**: `mn_addr_preprod1ezxkztduas5uxhx6g2tfvtet39pztkl0neexs9wxncffc9q3zxtsmr6zkl`
+- **Deployment Transaction**: `82a9c440c7afd840814e471d4cf773543c953b81edd8c254445d9747a20dc019`
 
 ---
 
@@ -77,11 +77,11 @@ Small research circles, field teams, and invitation-only gatherings need to know
 | Compact compilation + generated keys | Verified locally; three state-changing circuits |
 | Offline contract / application tests | Included and locally verified; see `docs/VALIDATION.md` |
 | Browser build and responsive/accessibility checks | See `docs/VALIDATION.md` for actual results |
-| Contract address | `[Pending Contract Address]` |
-| Public demo | `[Pending Deployment Link]` |
+| Contract address | `mn_addr_preprod1ezxkztduas5uxhx6g2tfvtet39pztkl0neexs9wxncffc9q3zxtsmr6zkl` |
+| Public demo | [cairn-green-nu.vercel.app](https://cairn-green-nu.vercel.app/) |
 | Hosted CI run | Verified passing on GitHub Actions |
-| Product X profile | Owner submission task |
-| Idea approval, videos, screenshots, commits | Owner submission tasks |
+| Demo video | [Google Drive](https://drive.google.com/file/d/1GFFPuCnS3hPzLzz9S3uNuiRTQmQwGvWy/view?usp=sharing) |
+| UI and verification screenshots | Included above |
 
 ## Quick start
 
@@ -220,7 +220,7 @@ docs/               Setup, usage, architecture, validation and level evidence
 
 ## Levels 1–4
 
-The implementation supports the requested levels. The complete requirement-by-requirement review is in [docs/LEVELS.md](docs/LEVELS.md). In addition to deployment, UI screenshots, repository setup and meaningful commits, the submission requires a **live demo, demo video, hosted passing CI run, idea approval and a product X profile**.
+The implementation supports the requested levels. The complete requirement-by-requirement review is in [docs/LEVELS.md](docs/LEVELS.md). In addition to deployment, UI screenshots, repository setup and meaningful commits, the submission includes a **live demo, demo video and hosted passing CI run**.
 
 [Product proposal](PROPOSAL.md) · [Usage guide](docs/USAGE.md) · [Architecture](docs/ARCHITECTURE.md) · [Local validation](docs/VALIDATION.md)
 
