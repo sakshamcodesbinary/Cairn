@@ -4,7 +4,7 @@
 0.31.1). The script invokes the real compiler and generates all three circuits'
 proving/verifying keys, then copies output to `frontend/src/managed` and
 `frontend/public/managed`. Do not hand-edit generated files. On Windows this uses
-WSL Ubuntu, user `deep_saha`, and `/home/deep_saha/.local/bin/compact`; override
+WSL Ubuntu, user `<username>`, and `/home/<username>/.local/bin/compact`; override
 `MIDNIGHT_WSL_DISTRO`, `MIDNIGHT_WSL_USER`, or `COMPACT_BIN` if necessary.
 
 ## Policy and threat model
