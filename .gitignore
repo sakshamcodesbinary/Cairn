@@ -1,0 +1,36 @@
+node_modules/
+dist/
+frontend/dist/
+.env
+.env.local
+.env.preprod
+.env.preview
+frontend/.env
+frontend/.env.local
+*.log
+logs/
+midnight-level-db/
+/.midnight-expert
+deployment.json
+scripts/make-commits.ps1
+.DS_Store
+Thumbs.db
+
+frontend/test-results/
+frontend/playwright-report/
+cairn-admin-backup*.json
+cairn-invitation*.json
+.cairn-private-state/
+
+# Agent-only files and local raw media
+.agents/
+.bob/
+.claude/
+.continue/
+__agent__/
+*.scratchpad*
+*.mp4
+
+# DO NOT ignore — these must be committed:
+# frontend/src/managed/    <- TypeScript contract types for React
+# frontend/public/managed/ <- ZK proving keys served at /managed/
