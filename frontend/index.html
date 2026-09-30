@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en" data-theme="day">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f1f4f5" />
+    <meta name="description" content="Cairn is private invitation access on Midnight. Prove you belong with a zero-knowledge proof, and keep your invitation credentials out of the public ledger." />
+    <meta property="og:title" content="Cairn — Leave a proof. Not a profile." />
+    <meta property="og:description" content="An invitation should open a door, not a file on you. Private access powered by Compact and Midnight." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/cairn-summit.jpg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Cairn — Private invitation access</title>
+    <script>
+      window.global = window;
+      if (typeof window.process === 'undefined') {
+        window.process = {
+          env: { NODE_ENV: 'development' },
+          version: '',
+          browser: true,
+          nextTick: function (cb) {
+            setTimeout(cb, 0);
+          },
+        };
+      }
+    </script>
+    <script>try{var t=localStorage.getItem('cairn:theme:v1');document.documentElement.dataset.theme=t==='day'||t==='night'?t:matchMedia('(prefers-color-scheme: dark)').matches?'night':'day'}catch(e){}</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
