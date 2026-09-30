@@ -1,0 +1,85 @@
+pragma language_version >= 0.22.0;
+
+import CompactStandardLibrary;
+
+// Cairn stores ONE active invite commitment, not a Merkle tree or an allowlist.
+// The administrator rotates that commitment to admit the next member. Historical
+// nullifiers and badges are retained across rotation and pause/resume.
+export ledger gate_name: Bytes<32>;
+export ledger allowlist_root: Bytes<32>;
+export ledger minimum_clearance: Uint<8>;
+export ledger max_entries: Uint<32>;
+export ledger verified_entries: Uint<32>;
+export ledger nullifiers: Set<Bytes<32>>;
+export ledger badge_registry: Set<Bytes<32>>;
+export ledger admin_public_key: Bytes<32>;
+export ledger is_open: Boolean;
+
+witness member_secret(): Bytes<32>;
+witness member_clearance(): Uint<8>;
+witness admin_secret(): Bytes<32>;
+
+// Clearance is part of the admin-approved invite, never a self-asserted score.
+export pure circuit derive_member_key(secret: Bytes<32>, clearance: Uint<8>): Bytes<32> {
+    return persistentHash<Vector<3, Bytes<32>>>([
+        pad(32, "cairn:member:v1"), secret, clearance as Bytes<32>
+    ]);
+}
+
+export pure circuit derive_member_nullifier(secret: Bytes<32>): Bytes<32> {
+    return persistentHash<Vector<2, Bytes<32>>>([pad(32, "cairn:nullifier:v1"), secret]);
+}
+
+export pure circuit derive_admin_key(secret: Bytes<32>): Bytes<32> {
+    return persistentHash<Vector<2, Bytes<32>>>([pad(32, "cairn:admin:v1"), secret]);
+}
+
+constructor(
+    initial_gate_name: Bytes<32>,
+    initial_allowlist_root: Bytes<32>,
+    initial_minimum_clearance: Uint<8>,
+    initial_max_entries: Uint<32>,
+    initial_admin_key: Bytes<32>
+) {
+    assert(initial_max_entries > 0, "Gate capacity must be positive");
+    gate_name = disclose(initial_gate_name);
+    allowlist_root = disclose(initial_allowlist_root);
+    minimum_clearance = disclose(initial_minimum_clearance);
+    max_entries = disclose(initial_max_entries);
+    admin_public_key = disclose(initial_admin_key);
+    verified_entries = 0;
+    is_open = true;
+}
+
+// Only the badge and a domain-separated nullifier are published. Witnesses
+// provide the secret and clearance; neither is a public circuit argument.
+export circuit prove_access(badge_commitment: Bytes<32>): [] {
+    assert(is_open, "This gate is currently closed");
+    assert(verified_entries < max_entries, "Gate capacity reached");
+    const secret = member_secret();
+    const clearance = member_clearance();
+    assert(derive_member_key(secret, clearance) == allowlist_root, "Invite commitment is not recognized");
+    assert(clearance >= minimum_clearance, "Clearance level is too low");
+    const nullifier = derive_member_nullifier(secret);
+    assert(!nullifiers.member(disclose(nullifier)), "This member has already entered");
+    assert(!badge_registry.member(disclose(badge_commitment)), "Badge commitment is already registered");
+    nullifiers.insert(disclose(nullifier));
+    badge_registry.insert(disclose(badge_commitment));
+    verified_entries = (verified_entries + 1) as Uint<32>;
+}
+
+// Rotation changes the single active invite, not the administrator's key.
+// Capacity cannot be zero or below the number of admissions already recorded.
+export circuit update_gate(new_root: Bytes<32>, new_min: Uint<8>, new_max: Uint<32>): [] {
+    assert(derive_admin_key(admin_secret()) == admin_public_key, "Administrator proof is invalid");
+    assert(new_max > 0, "Gate capacity must be positive");
+    assert(new_max >= verified_entries, "Capacity cannot be below verified entries");
+    allowlist_root = disclose(new_root);
+    minimum_clearance = disclose(new_min);
+    max_entries = disclose(new_max);
+}
+
+export circuit set_gate_open(open_state: Boolean): [] {
+    assert(derive_admin_key(admin_secret()) == admin_public_key, "Administrator proof is invalid");
+    is_open = disclose(open_state);
+}
