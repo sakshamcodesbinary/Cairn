@@ -1,0 +1,74 @@
+name: Cairn CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Compile real circuits, offline tests, and browser build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10
+
+      - name: Install Node.js 22
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            frontend/package-lock.json
+
+      - name: Install Compact 0.31.1
+        uses: midnightntwrk/setup-compact-action@836895c8fffbbea6bd986af2b17e8941ff29d1f8
+        with:
+          compact-version: '0.31.1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Compile circuits and regenerate proving assets
+        run: npm run compile
+
+      - name: Typecheck backend and deployment tools
+        run: npm run check
+
+      - name: Execute offline generated-contract tests
+        run: npm test
+
+      - name: Install frontend dependencies
+        run: npm --prefix frontend ci
+
+      - name: Test browser integration utilities
+        run: npm run test:app
+
+      - name: Build frontend against freshly generated contract
+        run: npm run build
+
+      - name: Install Chromium for browser checks
+        working-directory: frontend
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify browser journeys, responsive layouts and accessibility
+        run: npm run test:e2e
+
+      - name: Upload browser diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cairn-browser-diagnostics
+          path: |
+            frontend/playwright-report/
+            frontend/test-results/
+          retention-days: 7
